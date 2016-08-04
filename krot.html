@@ -1,0 +1,130 @@
+<html>
+
+<head>
+
+<style>
+
+body
+{
+    cursor:none;
+-moz-user-select: none; 
+        -khtml-user-select: none; 
+        -webkit-user-select: none; 
+        -o-user-select: none;
+}
+
+#krot
+{
+	position:absolute;
+}
+#kuvalda
+{
+	position:absolute;
+}
+#count
+{
+	color:red;
+	font-size:30px;
+	font-weight:bold;
+}
+</style>
+
+
+
+</head>
+
+<body onMouseMove="cursor()" onMouseDown = "hit()" onMouseUp = "take()">
+
+<div id="count">
+0 3
+</div>
+
+<div id = "krot" onClick="kill();">
+<img src = "char.jpg" />
+</div>
+
+
+<div id = "kuvalda">
+<img src="kuv1.png" />
+</div>
+
+</body>
+
+
+<script>
+var count=0, killable = false;
+var lives=3;
+
+function kill()
+{
+	document.getElementById("krot").innerHTML="<img src='dead.jpg' />";
+if(killable == true)
+{
+	document.getElementById("count").innerHTML=++count+" "+lives;
+	killable = false;
+}
+}
+
+function hit()
+{
+	document.getElementById("kuvalda").innerHTML="<img src='kuv2.png' />";
+}
+function take()
+{
+	document.getElementById("kuvalda").innerHTML="<img src='kuv1.png' />";
+}
+
+
+
+function cursor(e)
+{
+    	if(!e) e = event; 
+	var mX= e.clientX;
+	var mY= e.clientY;
+
+	document.getElementById("kuvalda").style.marginTop = mY - 120;
+	document.getElementById("kuvalda").style.marginLeft = mX;
+}
+
+
+function getRandomInt(min, max)
+{
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function change_position()
+{
+
+if(killable==true && lives>0)
+{
+	lives=lives-1;
+}
+
+document.getElementById("count").innerHTML=count+" "+lives;
+
+if(lives==0)
+{
+	document.getElementById("count").innerHTML="";
+        for (var i = 0; i < 62; ++i)
+       	{
+		document.getElementById("count").innerHTML +="<img src='dead.jpg' />";
+
+	}
+	alert("DIED!!!");
+	lives=4;
+	count=0;
+}
+
+killable = true;
+var x = getRandomInt(0, 800);
+var y = getRandomInt(0, 800);
+document.getElementById("krot").style.marginTop = x;
+document.getElementById("krot").style.marginLeft = y;
+document.getElementById("krot").innerHTML="<img src='char.jpg' />";
+}
+
+setInterval(change_position,1000);
+
+</script>
+
+</html>
